@@ -2,7 +2,8 @@
 SQLyog v10.2 
 MySQL - 5.5.27 : Database - virtcoin
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -33,6 +34,52 @@ CREATE TABLE `t_account` (
 
 /*Data for the table `t_account` */
 
+/*Table structure for table `t_entrust_info` */
+
+DROP TABLE IF EXISTS `t_entrust_info`;
+
+CREATE TABLE `t_entrust_info` (
+  `entrust_id` int(11) NOT NULL AUTO_INCREMENT,
+  `entrust_money_id` int(11) DEFAULT NULL,
+  `entrust_type` int(2) DEFAULT NULL,
+  `entrust_unit_money` double DEFAULT NULL,
+  `entrust_num` int(11) DEFAULT NULL,
+  `entrust_money` double DEFAULT NULL,
+  `entrust_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `entrust_comp_money` double DEFAULT NULL,
+  `entrust_sts` int(2) DEFAULT NULL,
+  `entrust_last_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `entrust_desc` varchar(300) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`entrust_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+/*Data for the table `t_entrust_info` */
+
+/*Table structure for table `t_trans_info` */
+
+DROP TABLE IF EXISTS `t_trans_info`;
+
+CREATE TABLE `t_trans_info` (
+  `trans_id` int(11) NOT NULL AUTO_INCREMENT,
+  `trans_type` int(2) DEFAULT NULL,
+  `trans_money_id` int(11) DEFAULT NULL,
+  `trans_unit_money` double DEFAULT NULL,
+  `trans_entrust_id` int(11) DEFAULT NULL,
+  `trans_num` int(11) DEFAULT NULL,
+  `trans_money` double DEFAULT NULL,
+  `trans_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `trans_sts` int(2) DEFAULT NULL,
+  `trans_comp_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `trans_desc` varchar(300) COLLATE utf8_bin DEFAULT NULL,
+  `trans_buy_user` varchar(20) COLLATE utf8_bin DEFAULT NULL,
+  `trans_sell_user` varchar(20) COLLATE utf8_bin DEFAULT NULL,
+  `trans_buy_hand_money` double DEFAULT NULL,
+  `trans_sell_hand_money` double DEFAULT NULL,
+  PRIMARY KEY (`trans_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+/*Data for the table `t_trans_info` */
+
 /*Table structure for table `t_user` */
 
 DROP TABLE IF EXISTS `t_user`;
@@ -52,9 +99,11 @@ CREATE TABLE `t_user` (
   `user_create_time` timestamp NULL DEFAULT NULL,
   `user_modify_time` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 /*Data for the table `t_user` */
+
+insert  into `t_user`(`user_id`,`user_name`,`user_type`,`user_lvl`,`user_phone`,`user_login_id`,`user_login_pwd`,`user_trans_pwd`,`user_card`,`user_sts`,`user_fid`,`user_create_time`,`user_modify_time`) values (1,'林',1,1,'18588886666','admin','123456',NULL,NULL,1,NULL,NULL,NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

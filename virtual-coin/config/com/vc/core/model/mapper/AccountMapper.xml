@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Account" >
+  <resultMap id="BaseResultMap" type="com.vc.core.model.Account" >
+    <result column="acct_id" property="acctId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="acct_money" property="acctMoney" jdbcType="DOUBLE" />
+    <result column="block_money" property="blockMoney" jdbcType="DOUBLE" />
+    <result column="acct_sts" property="acctSts" jdbcType="INTEGER" />
+    <result column="acct_create_time" property="acctCreateTime" jdbcType="TIMESTAMP" />
+    <result column="acct_modify_time" property="acctModifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    acct_id, user_id, acct_money, block_money, acct_sts, acct_create_time, acct_modify_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.vc.core.model.AccountExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_account
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.vc.core.model.AccountExample" >
+    delete from t_account
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.vc.core.model.Account" >
+    insert into t_account (acct_id, user_id, acct_money, 
+      block_money, acct_sts, acct_create_time, 
+      acct_modify_time)
+    values (#{acctId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{acctMoney,jdbcType=DOUBLE}, 
+      #{blockMoney,jdbcType=DOUBLE}, #{acctSts,jdbcType=INTEGER}, #{acctCreateTime,jdbcType=TIMESTAMP}, 
+      #{acctModifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.vc.core.model.Account" >
+    insert into t_account
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="acctId != null" >
+        acct_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="acctMoney != null" >
+        acct_money,
+      </if>
+      <if test="blockMoney != null" >
+        block_money,
+      </if>
+      <if test="acctSts != null" >
+        acct_sts,
+      </if>
+      <if test="acctCreateTime != null" >
+        acct_create_time,
+      </if>
+      <if test="acctModifyTime != null" >
+        acct_modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="acctId != null" >
+        #{acctId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="acctMoney != null" >
+        #{acctMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="blockMoney != null" >
+        #{blockMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="acctSts != null" >
+        #{acctSts,jdbcType=INTEGER},
+      </if>
+      <if test="acctCreateTime != null" >
+        #{acctCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="acctModifyTime != null" >
+        #{acctModifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.vc.core.model.AccountExample" resultType="java.lang.Integer" >
+    select count(*) from t_account
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_account
+    <set >
+      <if test="record.acctId != null" >
+        acct_id = #{record.acctId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.acctMoney != null" >
+        acct_money = #{record.acctMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="record.blockMoney != null" >
+        block_money = #{record.blockMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="record.acctSts != null" >
+        acct_sts = #{record.acctSts,jdbcType=INTEGER},
+      </if>
+      <if test="record.acctCreateTime != null" >
+        acct_create_time = #{record.acctCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.acctModifyTime != null" >
+        acct_modify_time = #{record.acctModifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_account
+    set acct_id = #{record.acctId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      acct_money = #{record.acctMoney,jdbcType=DOUBLE},
+      block_money = #{record.blockMoney,jdbcType=DOUBLE},
+      acct_sts = #{record.acctSts,jdbcType=INTEGER},
+      acct_create_time = #{record.acctCreateTime,jdbcType=TIMESTAMP},
+      acct_modify_time = #{record.acctModifyTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

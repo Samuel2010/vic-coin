@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vc.core.dao.TransInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.vc.core.model.TransInfo" >
+    <id column="trans_id" property="transId" jdbcType="INTEGER" />
+    <result column="trans_type" property="transType" jdbcType="INTEGER" />
+    <result column="trans_money_id" property="transMoneyId" jdbcType="INTEGER" />
+    <result column="trans_unit_money" property="transUnitMoney" jdbcType="DOUBLE" />
+    <result column="trans_entrust_id" property="transEntrustId" jdbcType="INTEGER" />
+    <result column="trans_num" property="transNum" jdbcType="INTEGER" />
+    <result column="trans_money" property="transMoney" jdbcType="DOUBLE" />
+    <result column="trans_time" property="transTime" jdbcType="TIMESTAMP" />
+    <result column="trans_sts" property="transSts" jdbcType="INTEGER" />
+    <result column="trans_comp_time" property="transCompTime" jdbcType="TIMESTAMP" />
+    <result column="trans_desc" property="transDesc" jdbcType="VARCHAR" />
+    <result column="trans_buy_user" property="transBuyUser" jdbcType="VARCHAR" />
+    <result column="trans_sell_user" property="transSellUser" jdbcType="VARCHAR" />
+    <result column="trans_buy_hand_money" property="transBuyHandMoney" jdbcType="DOUBLE" />
+    <result column="trans_sell_hand_money" property="transSellHandMoney" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    trans_id, trans_type, trans_money_id, trans_unit_money, trans_entrust_id, trans_num, 
+    trans_money, trans_time, trans_sts, trans_comp_time, trans_desc, trans_buy_user, 
+    trans_sell_user, trans_buy_hand_money, trans_sell_hand_money
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_trans_info
+    where trans_id = #{transId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_trans_info
+    where trans_id = #{transId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.vc.core.model.TransInfo" >
+    insert into t_trans_info (trans_id, trans_type, trans_money_id, 
+      trans_unit_money, trans_entrust_id, trans_num, 
+      trans_money, trans_time, trans_sts, 
+      trans_comp_time, trans_desc, trans_buy_user, 
+      trans_sell_user, trans_buy_hand_money, trans_sell_hand_money
+      )
+    values (#{transId,jdbcType=INTEGER}, #{transType,jdbcType=INTEGER}, #{transMoneyId,jdbcType=INTEGER}, 
+      #{transUnitMoney,jdbcType=DOUBLE}, #{transEntrustId,jdbcType=INTEGER}, #{transNum,jdbcType=INTEGER}, 
+      #{transMoney,jdbcType=DOUBLE}, #{transTime,jdbcType=TIMESTAMP}, #{transSts,jdbcType=INTEGER}, 
+      #{transCompTime,jdbcType=TIMESTAMP}, #{transDesc,jdbcType=VARCHAR}, #{transBuyUser,jdbcType=VARCHAR}, 
+      #{transSellUser,jdbcType=VARCHAR}, #{transBuyHandMoney,jdbcType=DOUBLE}, #{transSellHandMoney,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.vc.core.model.TransInfo" >
+    insert into t_trans_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="transId != null" >
+        trans_id,
+      </if>
+      <if test="transType != null" >
+        trans_type,
+      </if>
+      <if test="transMoneyId != null" >
+        trans_money_id,
+      </if>
+      <if test="transUnitMoney != null" >
+        trans_unit_money,
+      </if>
+      <if test="transEntrustId != null" >
+        trans_entrust_id,
+      </if>
+      <if test="transNum != null" >
+        trans_num,
+      </if>
+      <if test="transMoney != null" >
+        trans_money,
+      </if>
+      <if test="transTime != null" >
+        trans_time,
+      </if>
+      <if test="transSts != null" >
+        trans_sts,
+      </if>
+      <if test="transCompTime != null" >
+        trans_comp_time,
+      </if>
+      <if test="transDesc != null" >
+        trans_desc,
+      </if>
+      <if test="transBuyUser != null" >
+        trans_buy_user,
+      </if>
+      <if test="transSellUser != null" >
+        trans_sell_user,
+      </if>
+      <if test="transBuyHandMoney != null" >
+        trans_buy_hand_money,
+      </if>
+      <if test="transSellHandMoney != null" >
+        trans_sell_hand_money,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="transId != null" >
+        #{transId,jdbcType=INTEGER},
+      </if>
+      <if test="transType != null" >
+        #{transType,jdbcType=INTEGER},
+      </if>
+      <if test="transMoneyId != null" >
+        #{transMoneyId,jdbcType=INTEGER},
+      </if>
+      <if test="transUnitMoney != null" >
+        #{transUnitMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="transEntrustId != null" >
+        #{transEntrustId,jdbcType=INTEGER},
+      </if>
+      <if test="transNum != null" >
+        #{transNum,jdbcType=INTEGER},
+      </if>
+      <if test="transMoney != null" >
+        #{transMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="transTime != null" >
+        #{transTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transSts != null" >
+        #{transSts,jdbcType=INTEGER},
+      </if>
+      <if test="transCompTime != null" >
+        #{transCompTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transDesc != null" >
+        #{transDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="transBuyUser != null" >
+        #{transBuyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="transSellUser != null" >
+        #{transSellUser,jdbcType=VARCHAR},
+      </if>
+      <if test="transBuyHandMoney != null" >
+        #{transBuyHandMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="transSellHandMoney != null" >
+        #{transSellHandMoney,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.vc.core.model.TransInfo" >
+    update t_trans_info
+    <set >
+      <if test="transType != null" >
+        trans_type = #{transType,jdbcType=INTEGER},
+      </if>
+      <if test="transMoneyId != null" >
+        trans_money_id = #{transMoneyId,jdbcType=INTEGER},
+      </if>
+      <if test="transUnitMoney != null" >
+        trans_unit_money = #{transUnitMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="transEntrustId != null" >
+        trans_entrust_id = #{transEntrustId,jdbcType=INTEGER},
+      </if>
+      <if test="transNum != null" >
+        trans_num = #{transNum,jdbcType=INTEGER},
+      </if>
+      <if test="transMoney != null" >
+        trans_money = #{transMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="transTime != null" >
+        trans_time = #{transTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transSts != null" >
+        trans_sts = #{transSts,jdbcType=INTEGER},
+      </if>
+      <if test="transCompTime != null" >
+        trans_comp_time = #{transCompTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transDesc != null" >
+        trans_desc = #{transDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="transBuyUser != null" >
+        trans_buy_user = #{transBuyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="transSellUser != null" >
+        trans_sell_user = #{transSellUser,jdbcType=VARCHAR},
+      </if>
+      <if test="transBuyHandMoney != null" >
+        trans_buy_hand_money = #{transBuyHandMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="transSellHandMoney != null" >
+        trans_sell_hand_money = #{transSellHandMoney,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where trans_id = #{transId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.vc.core.model.TransInfo" >
+    update t_trans_info
+    set trans_type = #{transType,jdbcType=INTEGER},
+      trans_money_id = #{transMoneyId,jdbcType=INTEGER},
+      trans_unit_money = #{transUnitMoney,jdbcType=DOUBLE},
+      trans_entrust_id = #{transEntrustId,jdbcType=INTEGER},
+      trans_num = #{transNum,jdbcType=INTEGER},
+      trans_money = #{transMoney,jdbcType=DOUBLE},
+      trans_time = #{transTime,jdbcType=TIMESTAMP},
+      trans_sts = #{transSts,jdbcType=INTEGER},
+      trans_comp_time = #{transCompTime,jdbcType=TIMESTAMP},
+      trans_desc = #{transDesc,jdbcType=VARCHAR},
+      trans_buy_user = #{transBuyUser,jdbcType=VARCHAR},
+      trans_sell_user = #{transSellUser,jdbcType=VARCHAR},
+      trans_buy_hand_money = #{transBuyHandMoney,jdbcType=DOUBLE},
+      trans_sell_hand_money = #{transSellHandMoney,jdbcType=DOUBLE}
+    where trans_id = #{transId,jdbcType=INTEGER}
+  </update>
+</mapper>
