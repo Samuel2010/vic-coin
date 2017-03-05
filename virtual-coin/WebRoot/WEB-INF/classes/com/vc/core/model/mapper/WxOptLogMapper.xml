@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="WxOptLog">
+	<resultMap id="RM_Wx_Opt_Log" type="com.vc.core.model.WxOptLog">
+        <result property="logId" column="LOG_ID"/>
+        <result property="logUserId" column="LOG_USER_ID"/>
+        <result property="logPsId" column="LOG_PS_ID"/>
+        <result property="logOpt" column="LOG_OPT"/>
+        <result property="logRemark" column="LOG_REMARK"/>
+        <result property="logCreateTime" column="LOG_CREATE_TIME"/>
+        <result property="logModifyTime" column="LOG_MODIFY_TIME"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="WxOptLog.columns">
+	    <![CDATA[
+		LOG_ID,LOG_USER_ID,LOG_PS_ID,LOG_OPT,LOG_REMARK,LOG_CREATE_TIME,LOG_MODIFY_TIME
+	    ]]>
+	</sql>
+
+	<!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+	<insert id="WxOptLog.insert" useGeneratedKeys="false" keyProperty="logId">
+    <![CDATA[
+        INSERT INTO H_OPT_LOG (
+        	LOG_ID,
+        	LOG_USER_ID,
+        	LOG_PS_ID,
+        	LOG_OPT,
+        	LOG_REMARK,
+        	LOG_CREATE_TIME,
+        	LOG_MODIFY_TIME
+        ) VALUES (
+        	#{logId,jdbcType=VARCHAR} ,
+        	#{logUserId,jdbcType=VARCHAR} ,
+        	#{logPsId,jdbcType=VARCHAR} ,
+        	#{logOpt,jdbcType=DECIMAL} ,
+        	#{logRemark,jdbcType=VARCHAR} ,
+        	#{logCreateTime,jdbcType=DATE} ,
+        	#{logModifyTime,jdbcType=DATE}
+        )
+    ]]>
+	</insert>
+    
+	<update id="WxOptLog.update" >
+    <![CDATA[
+        UPDATE H_OPT_LOG SET
+	       	LOG_USER_ID = #{logUserId,jdbcType=VARCHAR} ,
+        	LOG_PS_ID = #{logPsId,jdbcType=VARCHAR} ,
+        	LOG_OPT = #{logOpt,jdbcType=DECIMAL} ,
+        	LOG_REMARK = #{logRemark,jdbcType=VARCHAR} ,
+        	LOG_CREATE_TIME = #{logCreateTime,jdbcType=DATE} ,
+			LOG_MODIFY_TIME = #{logModifyTime,jdbcType=DATE} 
+        WHERE 
+	        LOG_ID = #{logId}
+    ]]>
+	</update>
+    
+    <select id="WxOptLog.getById" resultMap="RM_Wx_Opt_Log">
+		SELECT <include refid="WxOptLog.columns" />
+	    <![CDATA[
+		    FROM H_OPT_LOG 
+	        WHERE LOG_ID = #{logId}
+	    ]]>
+	</select>
+	
+	<sql id="WxOptLog.findPage.where">
+		<!-- ognl访问静态方法的表达式 为@class@method(args),以下为调用rapid中的Ognl.isNotEmpty()方法,还有其它方法如isNotBlank()可以使用，具体请查看Ognl类 -->
+		<where>	      				
+	       <if test="@Ognl@isNotEmpty(logId)">
+				AND LOG_ID = #{logId}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(logUserId)">
+				AND LOG_USER_ID = #{logUserId}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(logPsId)">
+				AND LOG_PS_ID = #{logPsId}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(logOpt)">
+				AND LOG_OPT = #{logOpt}
+		   </if>
+		   <if test="@Ognl@isNotEmpty(logRemark)">
+				AND LOG_REMARK = #{logRemark}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(logCreateTimeBegin)">
+				AND LOG_CREATE_TIME >= #{logCreateTimeBegin}
+		   </if>
+		   <if test="@Ognl@isNotEmpty(logCreateTimeEnd)">
+				AND LOG_CREATE_TIME &lt;= #{logCreateTimeEnd}
+		   </if>
+		   <if test="@Ognl@isNotEmpty(logModifyTimeBegin)">
+				AND LOG_MODIFY_TIME >= #{logModifyTimeBegin}
+		   </if>
+		   <if test="@Ognl@isNotEmpty(logModifyTimeEnd)">
+				AND LOG_MODIFY_TIME &lt;= #{logModifyTimeEnd}
+		   </if>
+		</where>
+	</sql>
+		
+    <select id="WxOptLog.findPage.count" resultType="long">
+        SELECT count(*) FROM H_OPT_LOG 
+		<include refid="WxOptLog.findPage.where"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 offset,pageSize,lastRows 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="WxOptLog.findPage" resultMap="RM_Wx_Opt_Log">
+    	SELECT <include refid="WxOptLog.columns" />
+	    FROM H_OPT_LOG 
+		<include refid="WxOptLog.findPage.where"/>
+		
+		<if test="@Ognl@isNotEmpty(sortColumns)">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+</mapper>
+

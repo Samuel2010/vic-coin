@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE configuration
+PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-config.dtd">
+<configuration>
+	<plugins>
+		<plugin interceptor="com.tw.ei.baseclass.ibatis3.plugin.OffsetLimitInterceptor">
+			<property name="dialectClass" value="com.tw.ei.baseclass.jdbc.dialect.MySqlDialect"/>
+		</plugin>
+	</plugins>
+</configuration>

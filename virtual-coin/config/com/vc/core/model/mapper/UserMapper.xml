@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="User">
+  <resultMap id="RM_User" type="com.vc.core.model.User">
+        <result property="userId" column="USER_ID"/>
+        <result property="userName" column="USER_NAME"/>
+        <result property="userPhone" column="USER_PHONE"/>
+        <result property="userLoginId" column="USER_LOGIN_ID"/>
+        <result property="userLoginPwd" column="USER_LOGIN_PWD"/>
+        <result property="userTransPwd" column="USER_TRANS_PWD"/>
+        <result property="userCard" column="user_Card"/>
+        <result property="userType" column="USER_TYPE"/>
+        <result property="userLvl" column="USER_LVL"/>
+        <result property="userSts" column="USER_STS"/>
+        <result property="userFid" column="USER_FID"/>
+        <result property="userCreateTime" column="USER_CREATE_TIME"/>
+        <result property="userModifyTime" column="USER_MODIFY_TIME"/>
+  </resultMap>
+  
+  <!-- 用于select查询公用抽取的列 -->
+  <sql id="User.columns">
+      <![CDATA[
+     USER_ID,
+     USER_NAME,
+ 	 USER_TYPE,
+ 	 USER_LVL,
+ 	 USER_PHONE,
+ 	 USER_LOGIN_ID,
+ 	 USER_LOGIN_PWD,
+ 	 USER_TRANS_PWD,
+ 	 USER_CARD,
+ 	 USER_STS,
+ 	 USER_FID,
+ 	 USER_CREATE_TIME,
+ 	 USER_MODIFY_TIME
+      ]]>
+  </sql>
+
+  <!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+  <insert id="User.insert" useGeneratedKeys="false" keyProperty="userId">
+    <![CDATA[
+         INSERT INTO T_USER
+            (USER_ID,
+             USER_NAME,
+             USER_TYPE,
+             USER_LVL,
+             USER_PHONE,
+             USER_LOGIN_ID,
+             USER_LOGIN_PWD,
+             USER_TRANS_PWD,
+             USER_CARD,
+             USER_STS,
+             USER_FID,
+             USER_CREATE_TIME,
+             USER_MODIFY_TIME)
+		   VALUES (
+		    #{userId,jdbcType=VARCHAR} ,
+	        #{userName,jdbcType=VARCHAR} ,
+	        #{userType,jdbcType=DECIMAL} ,
+	        #{userLvl,jdbcType=DECIMAL} ,
+	        #{userPhone,jdbcType=VARCHAR} ,
+	        #{userLoginId,jdbcType=VARCHAR} ,
+	        #{userLoginPwd,jdbcType=VARCHAR} ,
+	        #{userTransPwd,jdbcType=VARCHAR} ,
+	        #{userCard,jdbcType=VARCHAR} ,
+	        #{userSts,jdbcType=DECIMAL} ,
+	        #{userFid,jdbcType=VARCHAR} ,
+	        #{userCreateTime,jdbcType=DATE} ,
+	        #{userModifyTime,jdbcType=DATE}
+	        )
+    ]]>
+  </insert>
+    
+  <update id="User.update" >
+    <![CDATA[
+        UPDATE T_USER SET
+              user_id = #{userId,jdbcType=VARCHAR},
+			  user_name = #{userName,jdbcType=VARCHAR} ,
+			  user_type =  #{userType,jdbcType=DECIMAL} ,
+			  user_lvl = #{userPhone,jdbcType=DECIMAL} ,
+			  user_phone =  #{userLoginId,jdbcType=VARCHAR} ,
+			  user_login_id =  #{userLoginId,jdbcType=VARCHAR} ,
+			  user_login_pwd = #{userLoginPwd,jdbcType=VARCHAR} ,
+			  user_trans_pwd = #{userTransPwd,jdbcType=VARCHAR} ,
+			  user_card = #{userCard,jdbcType=VARCHAR} ,
+			  user_sts =  #{userSts,jdbcType=DECIMAL} ,
+			  user_fid =  #{userFid,jdbcType=VARCHAR} ,
+			  user_modify_time =  now()
+        WHERE 
+          USER_ID = #{userId}
+    ]]>
+  </update>
+  <update id="User.updatePassword" >
+    <![CDATA[
+        UPDATE T_USER SET
+            USER_LOGIN_PWD = #{userTransPwd,jdbcType=VARCHAR}
+        WHERE 
+            USER_ID = #{userId}
+    ]]>
+    </update>
+
+    <delete id="User.delete">
+        UPDATE T_USER SET 
+          USER_STS = 2,USER_MODIFY_TIME = now()
+        WHERE USER_ID = #{userId}
+    </delete>
+    
+    <select id="User.getById" resultMap="RM_User">
+    SELECT <include refid="User.columns" />
+      <![CDATA[
+        FROM T_USER A
+        WHERE A.USER_ID = #{userId}
+      ]]>
+    </select>
+  
+    <sql id="User.findPage.where">
+      <!-- ognl访问静态方法的表达式 为@class@method(args),以下为调用rapid中的Ognl.isNotEmpty()方法,还有其它方法如isNotBlank()可以使用，具体请查看Ognl类 -->
+      <where>                
+       <if test="@Ognl@isNotEmpty(userId)">
+        AND UPPER(A.USER_ID) = UPPER(#{userId})
+       </if>
+        user_id = #{userId,,jdbcType=VARCHAR},
+			  user_name = #{userName,jdbcType=VARCHAR} ,
+			  user_type =  #{userType,jdbcType=INT} ,
+			  user_lvl = #{userPhone,jdbcType=VARCHAR} ,
+			  user_phone =  #{userLoginId,jdbcType=VARCHAR} ,
+			  user_login_id =  #{userLoginId,jdbcType=VARCHAR} ,
+			  user_login_pwd = #{userLoginPwd,jdbcType=VARCHAR} ,
+			  user_trans_pwd = #{userTransPwd,jdbcType=VARCHAR} ,
+			  user_card = #{userCard,jdbcType=VARCHAR} ,
+			  user_sts =  #{userSts,jdbcType=INT} ,
+			  user_fid =  #{userFid,jdbcType=VARCHAR} ,
+			  user_modify_time =  now()
+       <if test="@Ognl@isNotEmpty(userName)">
+        AND user_name = #{userName}
+       </if>
+       <if test="@Ognl@isNotEmpty(userType)">
+        AND user_type = #{userType}
+       </if>
+         <if test="@Ognl@isNotEmpty(userName)">
+        AND user_lvl = #{userName}
+       </if>
+         <if test="@Ognl@isNotEmpty(userPhone)">
+        AND user_phone = #{userPhone}
+       </if>
+         <if test="@Ognl@isNotEmpty(userLoginId)">
+        AND user_login_id = #{userLoginId}
+       </if>
+         <if test="@Ognl@isNotEmpty(userLoginPwd)">
+        AND user_login_pwd = #{userLoginPwd}
+       </if>
+         <if test="@Ognl@isNotEmpty(userTransPwd)">
+        AND user_trans_pwd = #{userTransPwd}
+       </if>
+         <if test="@Ognl@isNotEmpty(userCard)">
+        AND user_card = #{userCard}
+       </if>
+         <if test="@Ognl@isNotEmpty(userSts)">
+        AND user_sts = #{userSts}
+       </if>
+         <if test="@Ognl@isNotEmpty(userFid)">
+        AND user_fid = #{userFid}
+       </if>
+       <if test="@Ognl@isNotEmpty(userCreateTimeBegin)">
+        AND A.USER_CREATE_TIME >= #{userCreateTimeBegin}
+       </if>
+       <if test="@Ognl@isNotEmpty(userCreateTimeEnd)">
+        AND A.USER_CREATE_TIME &lt;= #{userCreateTimeEnd}
+       </if>
+       <if test="@Ognl@isNotEmpty(userModifyTimeBegin)">
+        AND A.USER_MODIFY_TIME >= #{userModifyTimeBegin}
+       </if>
+       <if test="@Ognl@isNotEmpty(userModifyTimeEnd)">
+        AND A.USER_MODIFY_TIME &lt;= #{userModifyTimeEnd}
+       </if>
+      </where>
+    </sql>
+    
+    <select id="User.findPage.count" resultType="long">
+        SELECT count(*) FROM T_USER A
+    <include refid="WxUser.findPage.where"/>    
+    </select>
+    
+    <!--
+      分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+      因为分页查询将传 offset,pageSize,lastRows 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="User.findPage" resultMap="RM_User">
+      SELECT <include refid="User.columns" />
+      FROM T_USER A
+    <include refid="User.findPage.where"/>
+    
+    <if test="@Ognl@isNotEmpty(sortColumns)">
+      ORDER BY ${sortColumns}
+    </if>
+    </select>
+    
+    <select id="User.login" resultMap="RM_User">
+        SELECT <include refid="User.columns" />
+        <![CDATA[
+            FROM T_USER A
+            WHERE UPPER(A.USER_LOGIN_ID) = UPPER(#{userLoginId}) AND UPPER(A.USER_LOGIN_PWD) = UPPER(#{userLoginPwd})
+        ]]>
+    </select>
+    
+</mapper>
+

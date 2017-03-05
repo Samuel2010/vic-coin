@@ -1,0 +1,88 @@
+<!-- lang: html -->
+<#import "/spring.ftl" as s />
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Cache-Control" content="no-cache"/>
+<meta name = "viewport" content ="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no,target-densitydpi=device-dpi">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta content="telephone=no" name="format-detection" />
+<link rel="stylesheet" type="text/css" href="<@s.url '/css/basics.css'/>">
+<link rel="stylesheet" type="text/css" href="<@s.url '/css/y_pop_block.css'/>">
+<link rel="stylesheet" type="text/css" href="<@s.url '/css/common.css'/>">
+<script type="text/javascript" src="<@s.url '/js/jquery/jquery.min.js'/>"></script>
+<script type="text/javascript" src="<@s.url '/js/common.js'/>"></script>
+<title>湖南移动幸福同行</title>
+</head>
+<body>
+    <div class="header">
+        <div class="choiceHeaderInner" onclick="jump('index')">
+            幸福帮帮团(作废，页面移动到xfbbt.html)
+        </div>
+        <div class="headerInner" onclick="jump('xfwkt')">
+            幸福微课堂
+        </div>
+        <div class="headerInner" onclick="jump('bkgly')">
+            板块管理员
+        </div>
+    </div>
+    <div class="notice">
+        <div class="noticeLieBiao">
+            帖子列表
+        </div>
+        <div class="noticeXuZhi">
+            发帖须知
+        </div>
+        <div class="noticeGonggao">
+            <MARQUEE scrollAmount=5 behavior=scroll>
+            有事您请说，大家来帮忙。本版块管理员张三，微信号zhangsan
+            </MARQUEE>
+        </div>
+        <div class="noticeSearch">
+            <input type="text" value="本版搜索" onClick="value=''" id="nameKey"/>
+            <span onclick="searchTieZi()">我要发帖</span>
+        </div>
+    </div>
+    
+    <div class="main">
+        <div class="mainList">
+            <div class="mainListPic"></div>
+            <div class="mainListName">
+                <lable class="mainListNameLeft">张三</lable>
+                <lable class="mainListNameRight">一天前</lable>
+            </div>
+            <div class="mainListTitle">
+                <div class="mainListTitlePic">顶</div>
+                <lable class="mainListTitleLabel">我要报考心理咨询师，求推荐培训</lable>
+            </div>
+            <div class="mainListReply">
+                <div class="mainListReplyAgree">10</div>
+                <div class="mainListReplyPic2"></div>
+                <div class="mainListReplyText">5</div>
+                <div class="mainListReplyPic1"></div>
+            </div>
+            <hr class="mainLine"/>
+        </div>
+        <div class="mainList">
+            <div class="mainListPic"></div>
+            <div class="mainListName">
+                <lable class="mainListNameLeft">张三</lable>
+                <lable class="mainListNameRight">一天前</lable>
+            </div>
+            <div class="mainListTitle">
+                <div class="mainListTitlePic">顶</div>
+                <lable class="mainListTitleLabel">我要报考心理咨询师，求推荐培训</lable>
+            </div>
+            <div class="mainListReply">
+                <div class="mainListReplyAgree">10</div>
+                <div class="mainListReplyPic2"></div>
+                <div class="mainListReplyText">5</div>
+                <div class="mainListReplyPic1"></div>
+            </div>
+            <hr class="mainLine"/>
+        </div>
+    </div>
+</body>
+</html>
