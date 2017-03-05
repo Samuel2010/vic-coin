@@ -31,7 +31,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter
         {
           uri.append(queryStr).append("&");
         }*/
-        response.sendRedirect("/login");
+        response.sendRedirect("login");
     }
     return super.preHandle(request, response, handler);
   }
