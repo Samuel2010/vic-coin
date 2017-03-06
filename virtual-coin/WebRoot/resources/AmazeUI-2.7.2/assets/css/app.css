@@ -19,3 +19,32 @@
 .myapp-login .myapp-login-bg .login-input:focus{background: none;}
 .myapp-login .myapp-login-bg .myapp-login-button { width: 100%; border-radius: 30px; background: #1161ee; border: none; font-size: 12px; line-height: 26px; }
 .myapp-login .myapp-login-bg legend { margin-top: 130px;border: none; border-top: 1px solid #9194a7; line-height: 50px;font-size: 14px;  color: #9194a7; text-align: center;}
+
+
+/**个人中心*/
+.level_info { text-align: right; }
+.level_info a { display: inline-block; color: #239ed0; border: 1px solid #239ed0; font-size: 12px; padding: 0 10px; line-height: 24px; border-radius: 13px; }
+.member_info { background: url(../../../images/2.0/my_center_bg.jpg); background-size: 100% 100%; }
+.account_info { background: url(../../../images/2.0/cwbg1.jpg); background-size: 100% 100%; }
+.info_detail { padding: 15px; display: -webkit-box; display: -moz-box; }
+.info_photo img { display: block; width: 55px; height: 55px; border-radius: 100%; border: 1px solid #fff; }
+.info_name { -webkit-box-flex: 1; -moz-box-flex: 1; margin: 0 0 0 10px; }
+.info_name .name { height: 30px; line-height: 30px; overflow: hidden; }
+.info_name .name p { font-size: 17px; color: #266076; margin:0;}
+.info_name .name .info_level { float: right; margin: 5px 0 0; width: 56px; text-align: center; font-size: 14px; line-height: 20px; color: #fff; text-shadow: 1px 1px 1px #b40000; }
+.login_name { line-height: 24px; height: 24px; overflow: hidden; }
+.login_name p { color: #666; font-size: 14px; }
+.login_name .zc { color: #666; font-size: 14px; }
+.login_name p:before { float: right; content: ''; width: 12px; height: 12px; border-top: 2px solid #fff; border-right: 2px solid #fff; transform: rotate(45deg); -webkit-transform: rotate(45deg); box-shadow: 1px -1px 1px 0 rgba(0,0,0,.5); -webkit-box-shadow: 1px -1px 1px 0 rgba(0,0,0,.5); margin: 6px 10px 0 0; }
+.piao_list { display: -webkit-box; display: -moz-box; width: 100%; }
+.piao_list dd { -webkit-box-flex: 1; -moz-box-flex: 1; text-align: center; font-size: 12px; color: #878787; padding: 8px 0 10px; border-top: 1px dashed #fff; border-bottom: 1px solid #e5e5e5; width: 25%; }
+.piao_list dd:nth-child(1) { background: rgba(255,255,255,.8); }
+.piao_list dd:nth-child(2) { background: rgba(255,255,255,.6); }
+.piao_list dd:nth-child(3) { background: rgba(255,255,255,.4); }
+.piao_list dd:nth-child(4) { background: rgba(255,255,255,.2); }
+.piao_list dd span { display: block; font-size: 16px; color: #ff6000; }
+.acct_zzc{color: #e21a1a;}
+.acct_ky{color: #1159e2;}
+.acct_dj{color: #ff6000;}
+
+

@@ -19,7 +19,7 @@
       </a>
     </li>
     <li>
-      <a onclick="">
+      <a onclick="jump('mycenter')">
         <span class="am-icon-user"></span>
         <span class="am-navbar-label">个人</span>
       </a>
