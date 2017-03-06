@@ -5,7 +5,15 @@ import org.springframework.stereotype.Repository;
 import com.tw.ei.baseclass.base.BaseIbatis3Dao;
 import com.vc.core.model.EntrustInfo;
 
+
 @Repository
-public class EntrustInfoDao extends BaseIbatis3Dao<EntrustInfo, String> {
+public class EntrustInfoDao extends BaseIbatis3Dao<EntrustInfo,Integer>{
+	
+	@Override
+	public String getIbatisMapperNamesapce() {
+		return "EntrustInfo";
+	}
+	
+	
 
 }
