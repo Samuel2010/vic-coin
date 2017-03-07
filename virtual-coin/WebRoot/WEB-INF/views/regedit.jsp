@@ -2,7 +2,7 @@
 <!doctype html>
 <html class="no-js">
 <head>
-  <#include "/inc/head2.0.ftl">
+  <#include "/inc/head.ftl">
   <title>用户绑定</title>
 </head>
 <body>

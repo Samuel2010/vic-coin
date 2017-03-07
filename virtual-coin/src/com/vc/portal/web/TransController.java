@@ -45,12 +45,13 @@ public class TransController
 		map.put("recordsFiltered", 3);
 
 		Map<String, String> dataMap = new HashMap<String, String>();
-		dataMap.put("name", "Angelica");
-		dataMap.put("extn", "Ramos");
-		dataMap.put("position", "Chief Executive Officer (CEO)");
-		dataMap.put("office", "London");
-		dataMap.put("start_date", "9th Oct 09");
-		dataMap.put("salary", "$1,200,000");
+		dataMap.put("id", "1");
+		dataMap.put("transUnitMoney", "1000.00");
+		dataMap.put("transType", "2");
+		dataMap.put("transNum", "999");
+		dataMap.put("transMoney", "88888.32");
+		dataMap.put("transSts", "2");
+		dataMap.put("transTime", "2017-03-02 11:11:23");
 		List list = new ArrayList();
 		list.add(dataMap);
 		list.add(dataMap);
