@@ -73,10 +73,10 @@
               </ul>
           </li>
           <li class="">
-            <a href="##" class="" >委托管理</a>
+            <a href="" class="" >委托管理</a>
           </li>
           <li class="">
-            <a href="##" class="" >成交查询</a>
+            <a href="javascript:jump('trans/transMainList')" class="" >成交查询</a>
           </li>
       </ul>
   </nav>

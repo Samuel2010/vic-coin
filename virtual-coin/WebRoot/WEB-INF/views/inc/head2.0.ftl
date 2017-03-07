@@ -14,6 +14,8 @@
 <link rel="stylesheet" href="<@s.url '/amazeUI/assets/css/amaze.css?time=${.now}'/>"/>
 <link rel="stylesheet" href="<@s.url '/amazeUI/assets/css/app.css?time=${.now}'/>">
 <link rel="stylesheet" href="<@s.url '/amazeUI/assets/css/jquery-labelauty.css'/>">
+<link rel="stylesheet" href="<@s.url '/amazeUI/assets/css/jquery.dataTables.css'/>">
+<link rel="stylesheet" href="<@s.url '/amazeUI/assets/css/responsive.dataTables.min.css'/>">
 
 <script type="text/javascript" src="<@s.url '/amazeUI/assets/js/jquery.min.js'/>"></script>
 <script type="text/javascript" src="<@s.url '/amazeUI/assets/js/amazeui.min.js'/>"></script>
