@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="TransInfo">
+
+	<resultMap id="RM_TransInfo" type="com.vc.core.model.TransInfo">
+        <result property="transId" column="trans_id"/>
+        <result property="transType" column="trans_type"/>
+        <result property="transMoneyId" column="trans_money_id"/>
+        <result property="transUnitMoney" column="trans_unit_money"/>
+        <result property="transEntrustId" column="trans_entrust_id"/>
+        <result property="transNum" column="trans_num"/>
+        <result property="transMoney" column="trans_money"/>
+        <result property="transTime" column="trans_time"/>
+        <result property="transSts" column="trans_sts"/>
+        <result property="transCompTime" column="trans_comp_time"/>
+        <result property="transDesc" column="trans_desc"/>
+        <result property="transBuyUser" column="trans_buy_user"/>
+        <result property="transSellUser" column="trans_sell_user"/>
+        <result property="transBuyHandMoney" column="trans_buy_hand_money"/>
+        <result property="transSellHandMoney" column="trans_sell_hand_money"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="TransInfo.columns">
+	    <![CDATA[
+		trans_id,trans_type,trans_money_id,trans_unit_money,trans_entrust_id,trans_num,trans_money,trans_time,trans_sts,trans_comp_time,trans_desc,trans_buy_user,trans_sell_user,trans_buy_hand_money,trans_sell_hand_money
+	    ]]>
+	</sql>
+
+	<!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+	<insert id="TransInfo.insert" useGeneratedKeys="false" keyProperty="transId">
+    <![CDATA[
+        INSERT INTO t_trans_info (
+        	trans_id ,
+        	trans_type ,
+        	trans_money_id ,
+        	trans_unit_money ,
+        	trans_entrust_id ,
+        	trans_num ,
+        	trans_money ,
+        	trans_time ,
+        	trans_sts ,
+        	trans_comp_time ,
+        	trans_desc ,
+        	trans_buy_user ,
+        	trans_sell_user ,
+        	trans_buy_hand_money ,
+        	trans_sell_hand_money 
+        ) VALUES (
+        	#{transId,jdbcType=INTEGER} ,
+        	#{transType,jdbcType=INTEGER} ,
+        	#{transMoneyId,jdbcType=INTEGER} ,
+        	#{transUnitMoney,jdbcType=DOUBLE} ,
+        	#{transEntrustId,jdbcType=INTEGER} ,
+        	#{transNum,jdbcType=INTEGER} ,
+        	#{transMoney,jdbcType=DOUBLE} ,
+        	#{transTime,jdbcType=TIMESTAMP} ,
+        	#{transSts,jdbcType=INTEGER} ,
+        	#{transCompTime,jdbcType=TIMESTAMP} ,
+        	#{transDesc,jdbcType=VARCHAR} ,
+        	#{transBuyUser,jdbcType=VARCHAR} ,
+        	#{transSellUser,jdbcType=VARCHAR} ,
+        	#{transBuyHandMoney,jdbcType=DOUBLE} ,
+        	#{transSellHandMoney,jdbcType=DOUBLE} 
+        )
+    ]]>
+		<!--	
+			oracle: order="BEFORE" SELECT sequenceName.nextval AS ID FROM DUAL 
+			DB2: order="BEFORE"" values nextval for sequenceName
+		<selectKey resultType="java.lang.Long" order="BEFORE" keyProperty="userId">
+			SELECT sequenceName.nextval AS ID FROM DUAL 
+        </selectKey>
+		-->
+	</insert>
+    
+	<update id="TransInfo.update" >
+    <![CDATA[
+        UPDATE t_trans_info SET
+	        trans_type = #{transType,jdbcType=INTEGER} ,
+	        trans_money_id = #{transMoneyId,jdbcType=INTEGER} ,
+	        trans_unit_money = #{transUnitMoney,jdbcType=DOUBLE} ,
+	        trans_entrust_id = #{transEntrustId,jdbcType=INTEGER} ,
+	        trans_num = #{transNum,jdbcType=INTEGER} ,
+	        trans_money = #{transMoney,jdbcType=DOUBLE} ,
+	        trans_time = #{transTime,jdbcType=TIMESTAMP} ,
+	        trans_sts = #{transSts,jdbcType=INTEGER} ,
+	        trans_comp_time = #{transCompTime,jdbcType=TIMESTAMP} ,
+	        trans_desc = #{transDesc,jdbcType=VARCHAR} ,
+	        trans_buy_user = #{transBuyUser,jdbcType=VARCHAR} ,
+	        trans_sell_user = #{transSellUser,jdbcType=VARCHAR} ,
+	        trans_buy_hand_money = #{transBuyHandMoney,jdbcType=DOUBLE} ,
+	        trans_sell_hand_money = #{transSellHandMoney,jdbcType=DOUBLE} 
+        WHERE 
+	        trans_id = #{transId} 
+    ]]>
+	</update>
+
+    <delete id="TransInfo.delete">
+    <![CDATA[
+        DELETE FROM t_trans_info WHERE
+	        trans_id = #{transId} 
+    ]]>
+    </delete>
+    
+    <select id="TransInfo.getById" resultMap="RM_TransInfo">
+		SELECT <include refid="TransInfo.columns" />
+	    <![CDATA[
+		    FROM t_trans_info 
+	        WHERE 
+	        	trans_id = #{transId} 
+	    ]]>
+	</select>
+	
+	<sql id="TransInfo.findPage.where">
+		<!-- ognl访问静态方法的表达式 为@class@method(args),以下为调用rapid中的Ognl.isNotEmpty()方法,还有其它方法如isNotBlank()可以使用，具体请查看Ognl类 -->
+		<where>	      				
+	       <if test="@Ognl@isNotEmpty(transId)">
+				AND trans_id = #{transId}
+			</if>
+	       <if test="@Ognl@isNotEmpty(transType)">
+				AND trans_type = #{transType}
+			</if>
+	       <if test="@Ognl@isNotEmpty(transMoneyId)">
+				AND trans_money_id = #{transMoneyId}
+			</if>
+	       <if test="@Ognl@isNotEmpty(transUnitMoney)">
+				AND trans_unit_money = #{transUnitMoney}
+			</if>
+	       <if test="@Ognl@isNotEmpty(transEntrustId)">
+				AND trans_entrust_id = #{transEntrustId}
+			</if>
+	       <if test="@Ognl@isNotEmpty(transNum)">
+				AND trans_num = #{transNum}
+			</if>
+	       <if test="@Ognl@isNotEmpty(transMoney)">
+				AND trans_money = #{transMoney}
+			</if>
+	       <if test="@Ognl@isNotEmpty(transTimeBegin)">
+				AND trans_time >= #{transTimeBegin}
+		   </if>
+		   <if test="@Ognl@isNotEmpty(transTimeEnd)">
+				AND trans_time &lt;= #{transTimeEnd}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(transSts)">
+				AND trans_sts = #{transSts}
+			</if>
+	       <if test="@Ognl@isNotEmpty(transCompTimeBegin)">
+				AND trans_comp_time >= #{transCompTimeBegin}
+		   </if>
+		   <if test="@Ognl@isNotEmpty(transCompTimeEnd)">
+				AND trans_comp_time &lt;= #{transCompTimeEnd}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(transDesc)">
+				AND trans_desc = #{transDesc}
+			</if>
+	       <if test="@Ognl@isNotEmpty(transBuyUser)">
+				AND trans_buy_user = #{transBuyUser}
+			</if>
+	       <if test="@Ognl@isNotEmpty(transSellUser)">
+				AND trans_sell_user = #{transSellUser}
+			</if>
+	       <if test="@Ognl@isNotEmpty(transBuyHandMoney)">
+				AND trans_buy_hand_money = #{transBuyHandMoney}
+			</if>
+	       <if test="@Ognl@isNotEmpty(transSellHandMoney)">
+				AND trans_sell_hand_money = #{transSellHandMoney}
+			</if>
+		</where>
+	</sql>
+		
+    <select id="TransInfo.findPage.count" resultType="long">
+        SELECT count(*) FROM t_trans_info 
+		<include refid="TransInfo.findPage.where"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 offset,pageSize,lastRows 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="TransInfo.findPage" resultMap="RM_TransInfo">
+    	SELECT <include refid="TransInfo.columns" />
+	    FROM t_trans_info 
+		<include refid="TransInfo.findPage.where"/>
+		
+		<if test="@Ognl@isNotEmpty(sortColumns)">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+
+	
+</mapper>
+

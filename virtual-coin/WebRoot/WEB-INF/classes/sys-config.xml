@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <comment>全局变量 配置文件</comment>
+    
+    <!-- wxid -->
+    <entry key="corpId">wxc9b00913f3e0f94d</entry>
+    
+    <!-- app url -->
+    <entry key="app_path">http://111.8.11.168/wx-heap/</entry>
+    
+    <!-- appDomain -->
+    <entry key="appDomain">http://h-eap.hn.chinamobile.com</entry>
+    
+    <!-- apiUrl -->
+    <entry key="apiUrl">http://h-eap.hn.chinamobile.com/wx-heap-web/</entry>
+</properties>

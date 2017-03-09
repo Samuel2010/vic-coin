@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="EntrustInfo">
+
+	<resultMap id="RM_EntrustInfo" type="com.vc.core.model.EntrustInfo">
+        <result property="entrustId" column="entrust_id"/>
+        <result property="entrustMoneyId" column="entrust_money_id"/>
+        <result property="entrustType" column="entrust_type"/>
+        <result property="entrustUnitMoney" column="entrust_unit_money"/>
+        <result property="entrustNum" column="entrust_num"/>
+        <result property="entrustMoney" column="entrust_money"/>
+        <result property="entrustTime" column="entrust_time"/>
+        <result property="entrustCompMoney" column="entrust_comp_money"/>
+        <result property="entrustSts" column="entrust_sts"/>
+        <result property="entrustLastTime" column="entrust_last_time"/>
+        <result property="entrustDesc" column="entrust_desc"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="EntrustInfo.columns">
+	    <![CDATA[
+		entrust_id,entrust_money_id,entrust_type,entrust_unit_money,entrust_num,entrust_money,entrust_time,entrust_comp_money,entrust_sts,entrust_last_time,entrust_desc
+	    ]]>
+	</sql>
+
+	<!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+	<insert id="EntrustInfo.insert" useGeneratedKeys="false" keyProperty="entrustId">
+    <![CDATA[
+        INSERT INTO t_entrust_info (
+        	entrust_id ,
+        	entrust_money_id ,
+        	entrust_type ,
+        	entrust_unit_money ,
+        	entrust_num ,
+        	entrust_money ,
+        	entrust_time ,
+        	entrust_comp_money ,
+        	entrust_sts ,
+        	entrust_last_time ,
+        	entrust_desc 
+        ) VALUES (
+        	#{entrustId,jdbcType=INTEGER} ,
+        	#{entrustMoneyId,jdbcType=INTEGER} ,
+        	#{entrustType,jdbcType=INTEGER} ,
+        	#{entrustUnitMoney,jdbcType=DOUBLE} ,
+        	#{entrustNum,jdbcType=INTEGER} ,
+        	#{entrustMoney,jdbcType=DOUBLE} ,
+        	#{entrustTime,jdbcType=TIMESTAMP} ,
+        	#{entrustCompMoney,jdbcType=DOUBLE} ,
+        	#{entrustSts,jdbcType=INTEGER} ,
+        	#{entrustLastTime,jdbcType=TIMESTAMP} ,
+        	#{entrustDesc,jdbcType=VARCHAR} 
+        )
+    ]]>
+		<!--	
+			oracle: order="BEFORE" SELECT sequenceName.nextval AS ID FROM DUAL 
+			DB2: order="BEFORE"" values nextval for sequenceName
+		<selectKey resultType="java.lang.Long" order="BEFORE" keyProperty="userId">
+			SELECT sequenceName.nextval AS ID FROM DUAL 
+        </selectKey>
+		-->
+	</insert>
+    
+	<update id="EntrustInfo.update" >
+    <![CDATA[
+        UPDATE t_entrust_info SET
+	        entrust_money_id = #{entrustMoneyId,jdbcType=INTEGER} ,
+	        entrust_type = #{entrustType,jdbcType=INTEGER} ,
+	        entrust_unit_money = #{entrustUnitMoney,jdbcType=DOUBLE} ,
+	        entrust_num = #{entrustNum,jdbcType=INTEGER} ,
+	        entrust_money = #{entrustMoney,jdbcType=DOUBLE} ,
+	        entrust_time = #{entrustTime,jdbcType=TIMESTAMP} ,
+	        entrust_comp_money = #{entrustCompMoney,jdbcType=DOUBLE} ,
+	        entrust_sts = #{entrustSts,jdbcType=INTEGER} ,
+	        entrust_last_time = #{entrustLastTime,jdbcType=TIMESTAMP} ,
+	        entrust_desc = #{entrustDesc,jdbcType=VARCHAR} 
+        WHERE 
+	        entrust_id = #{entrustId} 
+    ]]>
+	</update>
+
+    <delete id="EntrustInfo.delete">
+    <![CDATA[
+        DELETE FROM t_entrust_info WHERE
+	        entrust_id = #{entrustId} 
+    ]]>
+    </delete>
+    
+    <select id="EntrustInfo.getById" resultMap="RM_EntrustInfo">
+		SELECT <include refid="EntrustInfo.columns" />
+	    <![CDATA[
+		    FROM t_entrust_info 
+	        WHERE 
+	        	entrust_id = #{entrustId} 
+	    ]]>
+	</select>
+	
+	<sql id="EntrustInfo.findPage.where">
+		<!-- ognl访问静态方法的表达式 为@class@method(args),以下为调用rapid中的Ognl.isNotEmpty()方法,还有其它方法如isNotBlank()可以使用，具体请查看Ognl类 -->
+		<where>	      				
+	       <if test="@Ognl@isNotEmpty(entrustId)">
+				AND entrust_id = #{entrustId}
+			</if>
+	       <if test="@Ognl@isNotEmpty(entrustMoneyId)">
+				AND entrust_money_id = #{entrustMoneyId}
+			</if>
+	       <if test="@Ognl@isNotEmpty(entrustType)">
+				AND entrust_type = #{entrustType}
+			</if>
+	       <if test="@Ognl@isNotEmpty(entrustUnitMoney)">
+				AND entrust_unit_money = #{entrustUnitMoney}
+			</if>
+	       <if test="@Ognl@isNotEmpty(entrustNum)">
+				AND entrust_num = #{entrustNum}
+			</if>
+	       <if test="@Ognl@isNotEmpty(entrustMoney)">
+				AND entrust_money = #{entrustMoney}
+			</if>
+	       <if test="@Ognl@isNotEmpty(entrustTimeBegin)">
+				AND entrust_time >= #{entrustTimeBegin}
+		   </if>
+		   <if test="@Ognl@isNotEmpty(entrustTimeEnd)">
+				AND entrust_time &lt;= #{entrustTimeEnd}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(entrustCompMoney)">
+				AND entrust_comp_money = #{entrustCompMoney}
+			</if>
+	       <if test="@Ognl@isNotEmpty(entrustSts)">
+				AND entrust_sts = #{entrustSts}
+			</if>
+	       <if test="@Ognl@isNotEmpty(entrustLastTimeBegin)">
+				AND entrust_last_time >= #{entrustLastTimeBegin}
+		   </if>
+		   <if test="@Ognl@isNotEmpty(entrustLastTimeEnd)">
+				AND entrust_last_time &lt;= #{entrustLastTimeEnd}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(entrustDesc)">
+				AND entrust_desc = #{entrustDesc}
+			</if>
+		</where>
+	</sql>
+		
+    <select id="EntrustInfo.findPage.count" resultType="long">
+        SELECT count(*) FROM t_entrust_info 
+		<include refid="EntrustInfo.findPage.where"/>    
+    </select>
+    
+    <!--
+    	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+    	因为分页查询将传 offset,pageSize,lastRows 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="EntrustInfo.findPage" resultMap="RM_EntrustInfo">
+    	SELECT <include refid="EntrustInfo.columns" />
+	    FROM t_entrust_info 
+		<include refid="EntrustInfo.findPage.where"/>
+		
+		<if test="@Ognl@isNotEmpty(sortColumns)">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+
+	
+</mapper>
+

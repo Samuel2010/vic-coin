@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="WxUser">
+  <resultMap id="RM_Wx_User" type="com.vc.core.model.WxUser">
+        <result property="userId" column="USER_ID"/>
+        <result property="userOpenId" column="USER_OPENID"/>
+        <result property="userWxId" column="USER_WXID"/>
+        <result property="userName" column="USER_NAME"/>
+        <result property="userPhone" column="USER_PHONE"/>
+        <result property="userStatus" column="USER_STATUS"/>
+        <result property="userPassword" column="USER_PASSWORD"/>
+        <result property="userJiFen" column="USER_JIFEN"/>
+        <result property="userSecret" column="USER_SECRET"/>
+        <result property="userCreateTime" column="USER_CREATE_TIME"/>
+        <result property="userModifyTime" column="USER_MODIFY_TIME"/>
+        <result property="userAvatar" column="USER_AVATAR"/>
+        <result property="deptName" column="DEPT_NAME"/>
+        <result property="unitName" column="UNIT_NAME"/>
+  </resultMap>
+  
+  <!-- 用于select查询公用抽取的列 -->
+  <sql id="WxUser.columns">
+      <![CDATA[
+    A.USER_ID,A.USER_OPENID,A.USER_WXID,A.USER_NAME,A.USER_PHONE,A.USER_STATUS,A.USER_JIFEN,A.USER_SECRET,A.USER_CREATE_TIME,A.USER_MODIFY_TIME,A.USER_AVATAR,
+    USER_DEPT DEPT_NAME,USER_UNIT UNIT_NAME
+      ]]>
+  </sql>
+
+  <!-- useGeneratedKeys="true" keyProperty="xxx" for sqlserver and mysql -->
+  <insert id="WxUser.insert" useGeneratedKeys="false" keyProperty="userId">
+    <![CDATA[
+        INSERT INTO H_USER (
+          USER_ID,
+          USER_OPENID,
+          USER_WXID,
+          USER_NAME,
+          USER_PHONE,
+          USER_STATUS,
+          USER_PASSWORD,
+          USER_JIFEN,
+          USER_SECRET,
+          USER_CREATE_TIME,
+          USER_MODIFY_TIME,
+          USER_AVATAR
+        ) VALUES (
+          #{userId,jdbcType=VARCHAR} ,
+          #{userOpenId,jdbcType=VARCHAR} ,
+          #{userWxId,jdbcType=VARCHAR} ,
+          #{userName,jdbcType=VARCHAR} ,
+          #{userPhone,jdbcType=VARCHAR} ,
+          #{userStatus,jdbcType=DECIMAL} ,
+          #{userPassword,jdbcType=VARCHAR} ,
+          #{userJiFen,jdbcType=DECIMAL} ,
+          #{userSecret,jdbcType=VARCHAR} ,
+          #{userCreateTime,jdbcType=DATE} ,
+          #{userModifyTime,jdbcType=DATE} ,
+          #{userAvatar,jdbcType=VARCHAR} 
+        )
+    ]]>
+  </insert>
+    
+  <update id="WxUser.update" >
+    <![CDATA[
+        UPDATE H_USER SET
+            USER_NAME = #{userName,jdbcType=VARCHAR} ,
+            USER_OPENID = #{userOpenId,jdbcType=VARCHAR} ,
+            USER_WXID = #{userWxId,jdbcType=VARCHAR} ,
+            USER_PHONE = #{userPhone,jdbcType=VARCHAR} ,
+            USER_STATUS = #{userStatus,jdbcType=DECIMAL} ,
+            USER_JIFEN = #{userJiFen,jdbcType=DECIMAL} ,
+            USER_SECRET = #{userSecret,jdbcType=VARCHAR} ,
+            USER_MODIFY_TIME = now(), 
+            USER_AVATAR = #{userAvatar,jdbcType=VARCHAR}
+        WHERE 
+          USER_ID = #{userId}
+    ]]>
+  </update>
+  <update id="WxUser.updatePassword" >
+    <![CDATA[
+        UPDATE H_USER SET
+            USER_PASSW0RD = #{userPassword,jdbcType=VARCHAR}
+        WHERE 
+            USER_ID = #{userId}
+    ]]>
+    </update>
+
+    <delete id="WxUser.delete">
+        UPDATE H_USER SET 
+          USER_STATUS = 0,USER_MODIFY_TIME = now()
+        WHERE USER_ID = #{userId}
+    </delete>
+    
+    <select id="WxUser.getById" resultMap="RM_Wx_User">
+    SELECT <include refid="WxUser.columns" />
+      <![CDATA[
+        FROM H_USER A
+        WHERE UPPER(A.USER_ID) = UPPER(#{userId})
+      ]]>
+    </select>
+  
+    <sql id="WxUser.findPage.where">
+      <!-- ognl访问静态方法的表达式 为@class@method(args),以下为调用rapid中的Ognl.isNotEmpty()方法,还有其它方法如isNotBlank()可以使用，具体请查看Ognl类 -->
+      <where>                
+       <if test="@Ognl@isNotEmpty(userId)">
+        AND UPPER(A.USER_ID) = UPPER(#{userId})
+       </if>
+       <if test="@Ognl@isNotEmpty(userOpenId)">
+        AND A.USER_OPENID = #{userOpenId}
+       </if>
+       <if test="@Ognl@isNotEmpty(userWxId)">
+        AND A.USER_WXID = #{userWxId}
+       </if>
+         <if test="@Ognl@isNotEmpty(userName)">
+        AND A.USER_NAME = #{userName}
+       </if>
+         <if test="@Ognl@isNotEmpty(userPhone)">
+        AND A.USER_PHONE = #{userPhone}
+       </if>
+         <if test="@Ognl@isNotEmpty(userCode)">
+        AND A.USER_CODE = #{userCode}
+       </if>
+         <if test="@Ognl@isNotEmpty(userStatus)">
+        AND A.USER_STATUS = #{userStatus}
+       </if>
+         <if test="@Ognl@isNotEmpty(userPwd)">
+        AND A.USER_PWD = #{userPwd}
+       </if>
+         <if test="@Ognl@isNotEmpty(userJiFen)">
+        AND A.USER_JIFEN = #{userJiFen}
+       </if>
+         <if test="@Ognl@isNotEmpty(userSecret)">
+        AND A.USER_SECRET = #{userSecret}
+       </if>
+         <if test="@Ognl@isNotEmpty(userCreateTimeBegin)">
+        AND A.USER_CREATE_TIME >= #{userCreateTimeBegin}
+       </if>
+       <if test="@Ognl@isNotEmpty(userCreateTimeEnd)">
+        AND A.USER_CREATE_TIME &lt;= #{userCreateTimeEnd}
+       </if>
+       <if test="@Ognl@isNotEmpty(userModifyTimeBegin)">
+        AND A.USER_MODIFY_TIME >= #{userModifyTimeBegin}
+       </if>
+       <if test="@Ognl@isNotEmpty(userModifyTimeEnd)">
+        AND A.USER_MODIFY_TIME &lt;= #{userModifyTimeEnd}
+       </if>
+      </where>
+    </sql>
+    
+    <select id="WxUser.findPage.count" resultType="long">
+        SELECT count(*) FROM H_USER A
+    <include refid="WxUser.findPage.where"/>    
+    </select>
+    
+    <!--
+      分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
+      因为分页查询将传 offset,pageSize,lastRows 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
+    -->
+    <select id="WxUser.findPage" resultMap="RM_Wx_User">
+      SELECT <include refid="WxUser.columns" />
+      FROM H_USER A
+    <include refid="WxUser.findPage.where"/>
+    
+    <if test="@Ognl@isNotEmpty(sortColumns)">
+      ORDER BY ${sortColumns}
+    </if>
+    </select>
+    
+    <select id="WxUser.login" resultMap="RM_Wx_User">
+        SELECT <include refid="WxUser.columns" />
+        <![CDATA[
+            FROM H_USER A
+            WHERE UPPER(A.USER_ID) = (#{userId}) AND UPPER(A.USER_PASSWORD) = UPPER(#{password})
+        ]]>
+    </select>
+    
+    <select id="WxUser.getUserManager" resultMap="RM_Wx_User">
+        SELECT u.user_id,u.user_name,u.user_jifen 
+            FROM H_USER u LEFT JOIN h_user_right r ON u.user_id = r.right_user_id  WHERE r.right_sec_manager =1 OR r.right_sys_manager=1
+    </select>
+</mapper>
+
