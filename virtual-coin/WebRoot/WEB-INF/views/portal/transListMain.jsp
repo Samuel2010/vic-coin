@@ -26,6 +26,34 @@
           </a>
       </div>
   </header>
+  <form class="am-form am-form-horizontal am-padding-top-sm">
+  <div class="am-form-group">
+    <label for="transType" class="am-u-sm-3 am-form-label">交易类型</label>
+    <div class="am-u-sm-7 am-u-end">
+      <select name="transType" id="transType" data-am-selected>
+		  <option value="-1" selected>请选择</option>
+		  <option value="1" >买入</option>
+		  <option value="2" >卖出</option>
+	  </select>
+    </div>
+  </div>
+  <div class="am-form-group">
+    <label for="transSts" class="am-u-sm-3 am-form-label">交易状态</label>
+    <div class="am-u-sm-7 am-u-end">
+      <!--<input type="text" name="transSts" id="transSts" id="doc-ipt-3" placeholder="">-->
+      <select name="transSts" id="transSts" data-am-selected>
+		  <option value="-1" selected>请选择</option>
+		  <option value="1" >交易中</option>
+		  <option value="2" >已成交</option>
+	  </select>
+    </div>
+  </div>
+    <div class="am-form-group">
+    <div class="am-u-sm-6 am-u-end">
+     <button type="button" id="btnQry" class="am-btn am-btn-secondary">查询</button>
+    </div>
+  </div>
+  </form>
 	<table id="example" class="display nowrap" cellspacing="0" width="100%">
 	        <thead>
 	            <tr>

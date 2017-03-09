@@ -2,7 +2,9 @@ package com.vc.core.web;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,7 +20,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 
-import com.jfinal.kit.PropKit;
+import com.tw.ei.baseclass.page.Page;
 import com.vc.core.exception.BusinessException;
 import com.vc.core.exception.ParameterException;
 import com.vc.core.model.WxUser;
@@ -50,6 +52,40 @@ public abstract class BaseController
     binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
   }
 
+  /**
+   * 获取分页页码
+   * @param request
+   * @return
+   */
+  public int getPageNumber(HttpServletRequest request) {
+		//数据起始位置
+	    Integer start = Integer.parseInt(request.getParameter("start"));
+	    //数据长度
+	    Integer length = Integer.parseInt(request.getParameter("length"));
+	    //请求次数
+	    String draw = request.getParameter("draw");
+	    
+	    System.out.println("start:"+start+",length:"+length+",draw:"+draw);
+	    
+		return start/length+1;
+	}
+  
+  /**
+   * 根据返回结果初始化分页数据
+   * @param page
+   * @param request
+   * @return
+   */
+	public Map<String,Object> initPageData(Page page,HttpServletRequest request) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("draw", request.getParameter("draw"));
+		map.put("recordsTotal", page.getTotalCount());
+		map.put("recordsFiltered", page.getTotalCount());
+		map.put("data", page.getResult());
+		return map;
+	}
+  
+  
   public String getUser(HttpServletRequest request)
   {
     // ApiConfigKit.setThreadLocalApiConfig(getApiConfig());

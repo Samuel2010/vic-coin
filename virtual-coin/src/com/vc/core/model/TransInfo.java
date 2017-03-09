@@ -27,8 +27,8 @@ public class TransInfo extends BaseEntity implements java.io.Serializable{
 	
 
 	//date formats
-	public static final String FORMAT_TRANS_TIME = DATE_FORMAT;
-	public static final String FORMAT_TRANS_COMP_TIME = DATE_FORMAT;
+	public static final String FORMAT_TRANS_TIME = DATE_TIME_FORMAT;
+	public static final String FORMAT_TRANS_COMP_TIME = DATE_TIME_FORMAT;
 	
 	//可以直接使用: @Length(max=50,message="用户名长度不能大于50")显示错误消息
 	//columns START
@@ -102,6 +102,12 @@ public class TransInfo extends BaseEntity implements java.io.Serializable{
      */	
 	
 	private Double transSellHandMoney;
+	
+	public String transTimeBegin;
+	public String transTimeEnd;
+	public String transCompTimeBegin;
+	public String transCompTimeEnd;
+	
 	//columns END
 
 	public TransInfo(){
@@ -231,6 +237,39 @@ public class TransInfo extends BaseEntity implements java.io.Serializable{
 	
 	public Double getTransSellHandMoney() {
 		return this.transSellHandMoney;
+	}
+	
+
+	public String getTransTimeBegin() {
+		return transTimeBegin;
+	}
+
+	public void setTransTimeBegin(String transTimeBegin) {
+		this.transTimeBegin = transTimeBegin;
+	}
+
+	public String getTransTimeEnd() {
+		return transTimeEnd;
+	}
+
+	public void setTransTimeEnd(String transTimeEnd) {
+		this.transTimeEnd = transTimeEnd;
+	}
+
+	public String getTransCompTimeBegin() {
+		return transCompTimeBegin;
+	}
+
+	public void setTransCompTimeBegin(String transCompTimeBegin) {
+		this.transCompTimeBegin = transCompTimeBegin;
+	}
+
+	public String getTransCompTimeEnd() {
+		return transCompTimeEnd;
+	}
+
+	public void setTransCompTimeEnd(String transCompTimeEnd) {
+		this.transCompTimeEnd = transCompTimeEnd;
 	}
 
 	public String toString() {

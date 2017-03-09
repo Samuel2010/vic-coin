@@ -12,34 +12,48 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.tw.ei.baseclass.page.Page;
+import com.vc.core.model.TransInfo;
+import com.vc.core.service.TransInfoService;
 import com.vc.core.service.UserService;
+import com.vc.core.web.BaseController;
 
 @Controller
 @RequestMapping(value = "/trans")
-public class TransController
-{
-  @Autowired
-  private UserService UserSrv;
+public class TransController extends BaseController{
+	@Autowired
+	private UserService userSrv;
 
-  @RequestMapping("")
-  public String transMain(HttpServletRequest request)
-  {
-	
-		return "transMain"; 
-  }
- 
-  @RequestMapping("transMainList")
-  public String toTransMainList(HttpServletRequest request)
-  {
-	
-		return "portal/transListMain"; 
-  }
+	@Autowired
+	private TransInfoService transSrv;
+
+	@RequestMapping("")
+	public String transMain(HttpServletRequest request) {
+
+		return "transMain";
+	}
+
+	@RequestMapping("transMainList")
+	public String toTransMainList(HttpServletRequest request) {
+
+		return "portal/transListMain";
+	}
+
 
 	@RequestMapping("getTransListData")
 	@ResponseBody
-	public Object getTransListData(HttpServletRequest request) {
-
-		Map map = new HashMap();
+	public Object getTransListData(HttpServletRequest request,Integer transType,Integer transSts) {
+		TransInfo qryCond = new TransInfo();
+		qryCond.setPageNumber(getPageNumber(request));
+		if(transType != -1){
+			qryCond.setTransType(transType);
+		}
+		if(transSts != -1){
+			qryCond.setTransSts(transSts);
+		}
+		Page<TransInfo> data = transSrv.queryTransInfoByPage(qryCond);
+	   
+		/*Map map = new HashMap();
 		map.put("draw", 1);
 		map.put("recordsTotal", 3);
 		map.put("recordsFiltered", 3);
@@ -56,9 +70,9 @@ public class TransController
 		list.add(dataMap);
 		list.add(dataMap);
 		list.add(dataMap);
-		
-		map.put("data", list);
-		
-		return map;
+
+		map.put("data", list);*/
+		Map<String,Object> dataMap = initPageData(data, request);
+		return dataMap;
 	}
 }

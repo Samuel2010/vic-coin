@@ -9,12 +9,18 @@ import com.vc.core.model.TransInfo;
 @Repository
 public class TransInfoDao extends BaseIbatis3Dao<TransInfo, String> {
 
+	@Override
+	public String getIbatisMapperNamesapce() {
+		return "TransInfo";
+	}
+
 	public Page<TransInfo> queryTransInfoByPage(TransInfo transInfo) {
 		Page<TransInfo> resultList = new Page<TransInfo>();
 
 		transInfo.setSortColumns("TRANS_TIME DESC");
 
-		resultList = this.pageQuery(getIbatisMapperNamesapce() + ".findPage",transInfo);
+		resultList = this.pageQuery(getIbatisMapperNamesapce() + ".findPage",
+				transInfo);
 
 		return resultList;
 	}
